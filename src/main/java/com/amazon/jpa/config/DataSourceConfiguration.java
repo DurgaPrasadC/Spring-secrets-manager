@@ -80,26 +80,26 @@ public class DataSourceConfiguration {
 		// Decrypted secret using the associated KMS CMK
 		// Depending on whether the secret was a string or binary, one of these fields will be populated
 		String secret = getSecretValueResponse.getSecretString();
-		if(secret == null) {
-			log.error("The Secret String returned is null");
-			return null;
-		}
-			try {
-				secretsJson = objectMapper.readTree(secret);
-			} catch (IOException e) {
-				log.error("Exception while retreiving secret values: " + e.getMessage());
-			}
-		
-
-		System.out.println("Secrets json - "+secretsJson);
-		String host = secretsJson.get("host").textValue();
-		String port = secretsJson.get("port").textValue();
-		String dbname = secretsJson.get("dbname").textValue();
-		String username = secretsJson.get("username").textValue();
-		String password = secretsJson.get("password").textValue();
-		appDataSourceProperties().setUrl("jdbc:postgresql://" + host + ":" + port + "/" + dbname);
-		appDataSourceProperties().setUsername(username);
-		appDataSourceProperties().setPassword(password);
+//		if(secret == null) {
+//			log.error("The Secret String returned is null");
+//			return null;
+//		}
+//			try {
+//				secretsJson = objectMapper.readTree(secret);
+//			} catch (IOException e) {
+//				log.error("Exception while retreiving secret values: " + e.getMessage());
+//			}
+//
+//
+//		System.out.println("Secrets json - "+secretsJson);
+//		String host = secretsJson.get("host").textValue();
+//		String port = secretsJson.get("port").textValue();
+//		String dbname = secretsJson.get("dbname").textValue();
+//		String username = secretsJson.get("username").textValue();
+//		String password = secretsJson.get("password").textValue();
+		appDataSourceProperties().setUrl("jdbc:postgresql://localhost:5432/");
+		appDataSourceProperties().setUsername("postgres");
+		appDataSourceProperties().setPassword(secret);
 
         return appDataSourceProperties().initializeDataSourceBuilder().build();
     }
